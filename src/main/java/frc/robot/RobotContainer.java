@@ -9,6 +9,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -79,6 +80,11 @@ public class RobotContainer {
 public static DriveBase driveBase;
 
 
+  //Arm motors and subsystem
+  public static CANSparkMax lowArmJoint = new CANSparkMax(5, MotorType.kBrushless);
+  public static CANSparkMax highArmJoint = new CANSparkMax(6, MotorType.kBrushless);
+  public static ArmBase armBase;
+
 
 //Initializes commands in RobotContainer
 public static DriveWithJoystick driveWithJoystick; 
@@ -87,7 +93,7 @@ public static DriveWithJoystick driveWithJoystick;
 //Creates Joysticks
 public static Joystick rightJoystick; 
 public static Joystick leftJoystick; 
-public static Joystick logiTech; 
+public static CommandPS4Controller logiTech; 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -95,12 +101,12 @@ public static Joystick logiTech;
 //Initializes Joystick
     leftJoystick = new Joystick(0);
     rightJoystick = new Joystick(1);
-    logiTech = new Joystick(2);
+    logiTech = new CommandPS4Controller(2);
     
     driveBase = new DriveBase();
     driveWithJoystick = new DriveWithJoystick();
     CommandScheduler.getInstance().setDefaultCommand(driveBase, driveWithJoystick);
-    
+    armBase = new ArmBase();
 
     // Configure the trigger bindings
     configureBindings();
@@ -143,7 +149,7 @@ public static Joystick logiTech;
     return leftJoystick;
   }
 
-  public static Joystick getLogiTech(){
+  public static CommandPS4Controller getLogiTech(){
     return logiTech;
   }
 }

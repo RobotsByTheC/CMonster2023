@@ -66,7 +66,7 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-
+public static LimelightBase limelightBase;
 
 
  //declared and initallizes talons and victors for drive train 
@@ -107,6 +107,7 @@ public static CommandPS4Controller logiTech;
     driveWithJoystick = new DriveWithJoystick();
     CommandScheduler.getInstance().setDefaultCommand(driveBase, driveWithJoystick);
     armBase = new ArmBase();
+    limelightBase = new LimelightBase();
 
     // Configure the trigger bindings
     configureBindings();

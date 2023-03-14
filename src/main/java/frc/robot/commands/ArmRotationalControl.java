@@ -20,8 +20,8 @@ public class ArmRotationalControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.armBase.SetLowJoint(RobotContainer.armBase.GetLowJointAngle() + RobotContainer.getLogiTech().getRightX());
-    RobotContainer.armBase.SetHighJoint(RobotContainer.armBase.GetHighJointAngle() + RobotContainer.getLogiTech().getRightY());
+   // RobotContainer.armBase.SetLowJoint(RobotContainer.armBase.GetLowJointAngle() + RobotContainer.getLogiTech().getRightX());
+   // RobotContainer.armBase.SetHighJoint(RobotContainer.armBase.GetHighJointAngle() + RobotContainer.getLogiTech().getRightY());
   }
 
   // Called once the command ends or is interrupted.

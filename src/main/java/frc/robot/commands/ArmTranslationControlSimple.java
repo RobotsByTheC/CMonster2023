@@ -21,10 +21,10 @@ public class ArmTranslationControlSimple extends CommandBase {
   @Override
   public void execute() 
   {
-    double x = RobotContainer.logiTech.getRightX();
-    double y = RobotContainer.logiTech.getRightY();
-    RobotContainer.armBase.SetXPos(RobotContainer.armBase.GetXPos() + x);
-    RobotContainer.armBase.SetYPos(RobotContainer.armBase.GetYPos() + y);
+    //double x = RobotContainer.logiTech.getRightX();
+    //double y = RobotContainer.logiTech.getRightY();
+    //RobotContainer.armBase.SetXPos(RobotContainer.armBase.GetXPos() + x);
+   // RobotContainer.armBase.SetYPos(RobotContainer.armBase.GetYPos() + y);
   }
 
   // Called once the command ends or is interrupted.

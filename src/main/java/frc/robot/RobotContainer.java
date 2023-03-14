@@ -5,8 +5,6 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -75,15 +73,20 @@ public static LimelightBase limelightBase;
  public static WPI_TalonSRX rightFrontTalon = new WPI_TalonSRX(4); 
  public static WPI_VictorSPX rightBackVictor = new WPI_VictorSPX(5);
 
+ //Arm motors and subsystem
+  public static CANSparkMax lowArmJoint = new CANSparkMax(5, MotorType.kBrushless);
+ public static CANSparkMax highArmJoint = new CANSparkMax(6, MotorType.kBrushless);
+
+ //compressor and solenoids
+ //Compressors
+ public static Compressor robotCompressor;
+ public static DoubleSolenoid clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,0,1);
+
 
 //Initialzes subsystems in RobotContainer
 public static DriveBase driveBase;
-
-
-  //Arm motors and subsystem
-  public static CANSparkMax lowArmJoint = new CANSparkMax(5, MotorType.kBrushless);
-  public static CANSparkMax highArmJoint = new CANSparkMax(6, MotorType.kBrushless);
-  public static ArmBase armBase;
+public static ClawBase clawBase;
+public static ArmBase armBase;
 
 
 //Initializes commands in RobotContainer
@@ -93,7 +96,10 @@ public static DriveWithJoystick driveWithJoystick;
 //Creates Joysticks
 public static Joystick rightJoystick; 
 public static Joystick leftJoystick; 
-public static CommandPS4Controller logiTech; 
+public static Joystick logiTech; 
+
+public static JoystickButton boxButton;
+public static JoystickButton coneButton;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -101,13 +107,21 @@ public static CommandPS4Controller logiTech;
 //Initializes Joystick
     leftJoystick = new Joystick(0);
     rightJoystick = new Joystick(1);
-    logiTech = new CommandPS4Controller(2);
+    logiTech = new Joystick(2);
     
+    boxButton = new JoystickButton(logiTech, 1);
+    coneButton = new JoystickButton(logiTech, 2);
+
     driveBase = new DriveBase();
     driveWithJoystick = new DriveWithJoystick();
     CommandScheduler.getInstance().setDefaultCommand(driveBase, driveWithJoystick);
+
+    clawBase = new ClawBase();
     armBase = new ArmBase();
     limelightBase = new LimelightBase();
+
+    boxButton.onTrue(new BoxOpenClose());
+    coneButton.onTrue(new ConeOpenClose());
 
     // Configure the trigger bindings
     configureBindings();
@@ -150,7 +164,7 @@ public static CommandPS4Controller logiTech;
     return leftJoystick;
   }
 
-  public static CommandPS4Controller getLogiTech(){
+  public static Joystick getLogiTech(){
     return logiTech;
   }
 }

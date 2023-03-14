@@ -5,11 +5,12 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autos;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
-
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 //Imports needed for driving
@@ -25,8 +26,9 @@ import edu.wpi.first.cscore.UsbCamera;
 
 
 //imports joysticks and buttons
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick; 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -37,12 +39,11 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 
 //Spark max imports (to import, install vendor library online and put this link in https://software-metadata.revrobotics.com/REVLib.json)
-//import com.revrobotics.CANSparkMax;
-//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 //Pneumatic imports
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -65,7 +66,7 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-
+public static LimelightBase limelightBase;
 
 
  //declared and initallizes talons and victors for drive train 
@@ -74,17 +75,15 @@ public class RobotContainer {
  public static WPI_TalonSRX rightFrontTalon = new WPI_TalonSRX(4); 
  public static WPI_VictorSPX rightBackVictor = new WPI_VictorSPX(5);
 
- //Compressors
- public static Compressor robotCompressor;
-
- //Solenoids
- public static DoubleSolenoid clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,0,1);
- //public static DoubleSolenoid coneClawSolenoid = new DoubleSolenoid(PneumaticModuleType.CTREPCM,5,7);)
 
 //Initialzes subsystems in RobotContainer
 public static DriveBase driveBase;
-public static ClawBase clawBase;
-//public static ConeClawBase coneClawBase;
+
+
+  //Arm motors and subsystem
+  public static CANSparkMax lowArmJoint = new CANSparkMax(5, MotorType.kBrushless);
+  public static CANSparkMax highArmJoint = new CANSparkMax(6, MotorType.kBrushless);
+  public static ArmBase armBase;
 
 
 //Initializes commands in RobotContainer
@@ -94,41 +93,24 @@ public static DriveWithJoystick driveWithJoystick;
 //Creates Joysticks
 public static Joystick rightJoystick; 
 public static Joystick leftJoystick; 
-public static Joystick logiTech; 
-
-//Creates JoystickButtons
-
-public static JoystickButton boxButton;
-public static JoystickButton coneButton; 
-
-
+public static CommandPS4Controller logiTech; 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    clawBase = new ClawBase();
-//Initializes Joysticks
+//Initializes Joystick
     leftJoystick = new Joystick(0);
     rightJoystick = new Joystick(1);
-
-    logiTech = new Joystick(2);
-  
-//Initiallizes Buttons 
-    boxButton = new JoystickButton(logiTech, 1);
-    coneButton = new JoystickButton(logiTech, 2);
-
-  //Driving stuff 
+    logiTech = new CommandPS4Controller(2);
+    
     driveBase = new DriveBase();
     driveWithJoystick = new DriveWithJoystick();
     CommandScheduler.getInstance().setDefaultCommand(driveBase, driveWithJoystick);
-
-    //gives commands to joystick buttons
-    boxButton.onTrue(new BoxOpenClose());
-    coneButton.onTrue(new ConeOpenClose());
-    
+    armBase = new ArmBase();
+    limelightBase = new LimelightBase();
 
     // Configure the trigger bindings
-    configureBindings();  
+    configureBindings();
   }
 
   /**
@@ -148,9 +130,6 @@ public static JoystickButton coneButton;
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-   
-  
-
   }
 
   /**
@@ -171,7 +150,7 @@ public static JoystickButton coneButton;
     return leftJoystick;
   }
 
-  public static Joystick getLogiTech(){
+  public static CommandPS4Controller getLogiTech(){
     return logiTech;
   }
 }

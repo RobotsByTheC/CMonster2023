@@ -80,8 +80,9 @@ public static LimelightBase limelightBase;
  //compressor and solenoids
  //Compressors
  public static Compressor robotCompressor;
- public static DoubleSolenoid clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,0,1);
-
+ public static DoubleSolenoid boxSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,0,1);
+ public static DoubleSolenoid coneSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,2,3);
+ public static DoubleSolenoid armSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,4,5);
 
 //Initialzes subsystems in RobotContainer
 public static DriveBase driveBase;
@@ -100,6 +101,7 @@ public static Joystick logiTech;
 
 public static JoystickButton boxButton;
 public static JoystickButton coneButton;
+public static JoystickButton  armExtendButton;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -111,6 +113,7 @@ public static JoystickButton coneButton;
     
     boxButton = new JoystickButton(logiTech, 1);
     coneButton = new JoystickButton(logiTech, 2);
+    armExtendButton = new JoystickButton(logiTech, 3);
 
     driveBase = new DriveBase();
     driveWithJoystick = new DriveWithJoystick();
@@ -122,6 +125,7 @@ public static JoystickButton coneButton;
 
     boxButton.onTrue(new BoxOpenClose());
     coneButton.onTrue(new ConeOpenClose());
+    //armExtendButton.onTrue(new ArmInOut());
 
     // Configure the trigger bindings
     configureBindings();

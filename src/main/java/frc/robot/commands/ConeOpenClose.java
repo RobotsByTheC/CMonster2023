@@ -21,7 +21,7 @@ public class ConeOpenClose extends CommandBase {
   @Override
   public void execute() {
     RobotContainer.clawBase.coneSolenoidToggle();
-    RobotContainer.clawBase.clawToggle = !RobotContainer.clawBase.clawToggle;
+    RobotContainer.clawBase.coneToggle = !RobotContainer.clawBase.coneToggle;
   }
 
   // Called once the command ends or is interrupted.

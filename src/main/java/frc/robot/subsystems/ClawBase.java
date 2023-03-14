@@ -11,9 +11,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ClawBase extends SubsystemBase {
 
-  public boolean clawToggle = false;
+  public boolean boxToggle = false;
+  public boolean coneToggle = false;
 
-  public static DoubleSolenoid ClawSolenoid = RobotContainer.clawSolenoid;
+  public static DoubleSolenoid BoxSolenoid = RobotContainer.boxSolenoid;
+  public static DoubleSolenoid ConeSolenoid = RobotContainer.coneSolenoid;
+
 
   /** Creates a new ClawBase. */
   public ClawBase() {}
@@ -24,13 +27,13 @@ public class ClawBase extends SubsystemBase {
   }
 
   public void boxSolenoidToggle(){
-    if (clawToggle)
+    if (boxToggle)
     {
-    ClawSolenoid.set(DoubleSolenoid.Value.kForward);
+    BoxSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     else
     {
-    ClawSolenoid.set(DoubleSolenoid.Value.kReverse);
+    BoxSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
   }
   public CommandBase BoxSolenoidToggle()
@@ -44,15 +47,15 @@ public class ClawBase extends SubsystemBase {
 
   
 
-  
+
   public void coneSolenoidToggle(){
-    if (clawToggle)
+    if (coneToggle)
     {
-    ClawSolenoid.set(DoubleSolenoid.Value.kForward);
+    ConeSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     else
     {
-    ClawSolenoid.set(DoubleSolenoid.Value.kReverse);
+    ConeSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
   }
 

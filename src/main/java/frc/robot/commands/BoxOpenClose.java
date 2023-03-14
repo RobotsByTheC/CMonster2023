@@ -21,7 +21,7 @@ public class BoxOpenClose extends CommandBase {
   @Override
   public void execute() {
     RobotContainer.clawBase.boxSolenoidToggle();
-    RobotContainer.clawBase.clawToggle = !RobotContainer.clawBase.clawToggle;
+    RobotContainer.clawBase.boxToggle = !RobotContainer.clawBase.boxToggle;
   }
 
   // Called once the command ends or is interrupted.

@@ -13,9 +13,11 @@ public class ClawBase extends SubsystemBase {
 
   public boolean boxToggle = false;
   public boolean coneToggle = false;
+  public boolean clawToggle = false;
 
   public static DoubleSolenoid BoxSolenoid = RobotContainer.boxSolenoid;
   public static DoubleSolenoid ConeSolenoid = RobotContainer.coneSolenoid;
+  public static DoubleSolenoid ClawExtendSolenoid = RobotContainer.clawExtendSolenoid;
 
 
   /** Creates a new ClawBase. */
@@ -68,5 +70,25 @@ public class ClawBase extends SubsystemBase {
     );
   }
 
+
+  
+  public void clawSolenoidToggle(){
+    if (clawToggle)
+    {
+    ClawExtendSolenoid.set(DoubleSolenoid.Value.kForward);
+    }
+    else
+    {
+    ClawExtendSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }
+  }
+  public CommandBase ClawSolenoidToggle()
+  {
+    return runOnce(
+      () -> {
+        clawSolenoidToggle();
+      }
+    );
+  }
 
 }

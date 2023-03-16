@@ -27,6 +27,7 @@ import frc.robot.Constants.OperatorConstants;
 //Imports all commands and subsystems
 import frc.robot.commands.Autos;
 import frc.robot.commands.BoxOpenClose;
+import frc.robot.commands.ClawInOut;
 import frc.robot.commands.ConeOpenClose;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExampleCommand;
@@ -61,7 +62,7 @@ public static LimelightBase limelightBase;
  public static WPI_VictorSPX rightBackVictor = new WPI_VictorSPX(5);
 
  //Arm motors and subsystem
-  public static CANSparkMax lowArmJoint = new CANSparkMax(6, MotorType.kBrushless);
+ public static CANSparkMax lowArmJoint = new CANSparkMax(6, MotorType.kBrushless);
  public static CANSparkMax highArmJoint = new CANSparkMax(7, MotorType.kBrushless);
 
  //compressor and solenoids

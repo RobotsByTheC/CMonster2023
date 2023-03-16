@@ -4,51 +4,38 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-//Imports needed for driving
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
-//Imports all commands and subsystems
-import frc.robot.commands.*; 
-import frc.robot.subsystems.*; 
-
-//Imports things to be on smart dashboard
-import edu.wpi.first.wpilibj.DigitalInput; 
-import edu.wpi.first.cscore.UsbCamera;
-
-
-//imports joysticks and buttons
-import edu.wpi.first.wpilibj.Joystick; 
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj.Timer;
-
-
 //imports the pheonix products 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
-
 //Spark max imports (to import, install vendor library online and put this link in https://software-metadata.revrobotics.com/REVLib.json)
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Compressor;
 //Pneumatic imports
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.CAN;
-import edu.wpi.first.wpilibj.Compressor;
+//imports joysticks and buttons
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.GenericHID;
-
-//Servo import
-import edu.wpi.first.wpilibj.Servo; 
+import edu.wpi.first.wpilibj2.command.Command;
+//Imports needed for driving
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
+//Imports all commands and subsystems
+import frc.robot.commands.Autos;
+import frc.robot.commands.BoxOpenClose;
+import frc.robot.commands.ConeOpenClose;
+import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.SimpleArmRotationalControl;
+import frc.robot.subsystems.ArmBase;
+import frc.robot.subsystems.ClawBase;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.LimelightBase; 
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -92,6 +79,7 @@ public static ArmBase armBase;
 
 //Initializes commands in RobotContainer
 public static DriveWithJoystick driveWithJoystick; 
+public static SimpleArmRotationalControl simpleArmRotationalControl;
 
 
 //Creates Joysticks
@@ -116,14 +104,16 @@ public static JoystickButton  clawExtendButton;
     clawExtendButton = new JoystickButton(logiTech, 3);
 
     driveBase = new DriveBase();
-    driveWithJoystick = new DriveWithJoystick();
-    CommandScheduler.getInstance().setDefaultCommand(driveBase, driveWithJoystick);
-
     clawBase = new ClawBase();
     armBase = new ArmBase();
     limelightBase = new LimelightBase();
 
-  //  boxButton.onTrue(new BoxOpenClose());
+
+    driveWithJoystick = new DriveWithJoystick();
+    CommandScheduler.getInstance().setDefaultCommand(driveBase, driveWithJoystick);
+    CommandScheduler.getInstance().setDefaultCommand(armBase, simpleArmRotationalControl);
+
+    boxButton.onTrue(new BoxOpenClose());
     coneButton.onTrue(new ConeOpenClose());
     clawExtendButton.onTrue(new ClawInOut());
 

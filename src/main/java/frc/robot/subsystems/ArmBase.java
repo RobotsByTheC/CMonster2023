@@ -17,6 +17,19 @@ public class ArmBase extends SubsystemBase {
 
   /*             TODO
    *          
+   * * OR NOT:
+   * * NO positional sensing, dead reckoning for the operator
+   * * -0.06-0.06 range of power inputs on each joint
+   * * camera surveying arm motion?
+   * *
+   * *
+   * *
+   * *
+   * *
+   * *
+   * *
+   * *
+   * 
    *            ALL ANGLES IN RADIANS, ALL LENGTHS IN CM, ALL TIMES IN S       
    *            Rotational speed assumed to be .5 radian/sec at max velocity and decreasing linearly
    *            Two 16:1 reductions on the low joint to get it down to ~.5 radians/sec at max speed 
@@ -103,7 +116,8 @@ public class ArmBase extends SubsystemBase {
      * ANGLE CORRECTION
      * Combine current angle + target angle: do something like [Motor].set((tarang - curang)/halfpi)
      */ 
-    CurrentX = GetXPos();
+    /*
+     CurrentX = GetXPos();
     CurrentY = GetYPos();
 
       LowArmJoint.set((TargetLowJointAngle - GetLowJointAngle()) / 1.571);
@@ -113,6 +127,7 @@ public class ArmBase extends SubsystemBase {
       {
         GoToXYPos(TargetX, TargetY);
       }
+    */
   }
 
   //SWITCHMODE SETTINGS
@@ -205,5 +220,11 @@ public class ArmBase extends SubsystemBase {
     TargetY = targ;
   }
   
+
+  public void SimpleArmRotationalControl(double low, double high)
+  {
+    LowArmJoint.set(low * .06);
+    HighArmJoint.set(high * .06);
+  }
 
 }

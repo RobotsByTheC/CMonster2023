@@ -11,6 +11,7 @@ public class SimpleArmRotationalControl extends CommandBase {
   /** Creates a new SimpleArmRotationalControl. */
   public SimpleArmRotationalControl() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.armBase);
   }
 
   // Called when the command is initially scheduled.
@@ -20,7 +21,7 @@ public class SimpleArmRotationalControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.armBase.SimpleArmRotationalControl(RobotContainer.getLogiTech().getRawAxis(1),RobotContainer.getLogiTech().getRawAxis(5));
+    RobotContainer.armBase.SimpleArmRotationalControl(RobotContainer.getLogiTech());
   }
 
   // Called once the command ends or is interrupted.

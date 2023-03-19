@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.autocommands.TimedMove;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveBase;
 
@@ -66,7 +67,12 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    //auto for taxi
+     m_autonomousCommand = new TimedMove(3);
+
+    //auto for charge station
+  //  m_autonomousCommand = new TimedMove(1.9);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -87,6 +93,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    CommandScheduler.getInstance().setDefaultCommand(RobotContainer.driveBase, RobotContainer.driveWithJoystick);
+    CommandScheduler.getInstance().setDefaultCommand(RobotContainer.armBase, RobotContainer.simpleArmRotationalControl);
+
   }
 
   /** This function is called periodically during operator control. */

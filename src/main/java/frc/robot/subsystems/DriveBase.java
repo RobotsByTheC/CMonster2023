@@ -46,7 +46,31 @@ public class DriveBase extends SubsystemBase {
     rightVictor.set(rightMotorSpeed);
 
   }
-
+  public void driveAuto(double input){
+    if (input < 0)
+    //go BACKWARDS
+    {
+       leftTalon.set(.23);
+       rightTalon.set(-.23);
+       leftVictor.set(.23);
+       rightVictor.set(-.3);
+    }
+    else
+    //go FORWARDS
+    {
+       leftTalon.set(.5);
+       leftVictor.set(.5);
+       rightTalon.set(-.5);
+       rightVictor.set(-.5);
+    }
+    }
+    public void driveStopAuto()
+    {
+      leftTalon.set(0);
+      rightTalon.set(0);
+      leftVictor.set(0);
+      rightVictor.set(0);
+    }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

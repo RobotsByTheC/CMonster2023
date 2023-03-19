@@ -15,7 +15,7 @@ public class ClawBase extends SubsystemBase {
   public boolean coneToggle = false;
   public boolean clawToggle = false;
 
-  public static DoubleSolenoid BoxSolenoid = RobotContainer.boxSolenoid;
+  //public static DoubleSolenoid BoxSolenoid = RobotContainer.boxSolenoid;
   public static DoubleSolenoid ConeSolenoid = RobotContainer.coneSolenoid;
   public static DoubleSolenoid ClawExtendSolenoid = RobotContainer.clawExtendSolenoid;
 
@@ -28,7 +28,7 @@ public class ClawBase extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void boxSolenoidToggle(){
+  /*public void boxSolenoidToggle(){
     if (boxToggle)
     {
     BoxSolenoid.set(DoubleSolenoid.Value.kForward);
@@ -47,7 +47,7 @@ public class ClawBase extends SubsystemBase {
     );
   }
 
-  
+  */
 
 
   public void coneSolenoidToggle(){
@@ -82,6 +82,7 @@ public class ClawBase extends SubsystemBase {
     ClawExtendSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
   }
+  
   public CommandBase ClawSolenoidToggle()
   {
     return runOnce(

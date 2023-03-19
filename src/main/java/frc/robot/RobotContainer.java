@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import javax.swing.JOptionPane;
+
 //imports the pheonix products 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -31,12 +33,18 @@ import frc.robot.commands.ClawInOut;
 import frc.robot.commands.ConeOpenClose;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.HighArmDown;
+import frc.robot.commands.HighArmUp;
+import frc.robot.commands.LowArmDown;
+import frc.robot.commands.LowArmUp;
 import frc.robot.commands.SimpleArmRotationalControl;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ClawBase;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LimelightBase; 
+import edu.wpi.first.wpilibj.Timer;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -62,15 +70,15 @@ public static LimelightBase limelightBase;
  public static WPI_VictorSPX rightBackVictor = new WPI_VictorSPX(5);
 
  //Arm motors and subsystem
- public static CANSparkMax lowArmJoint = new CANSparkMax(6, MotorType.kBrushless);
+ public static CANSparkMax lowArmJoint = new CANSparkMax(6 , MotorType.kBrushless);
  public static CANSparkMax highArmJoint = new CANSparkMax(7, MotorType.kBrushless);
 
  //compressor and solenoids
  //Compressors
- public static Compressor robotCompressor;
- public static DoubleSolenoid boxSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,0,1);
- public static DoubleSolenoid coneSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,2,3);
- public static DoubleSolenoid clawExtendSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,4,5);
+ //public static Compressor robotCompressor;
+ //public static DoubleSolenoid boxSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,0,1);
+ public static DoubleSolenoid coneSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,6,7);
+ public static DoubleSolenoid clawExtendSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,0,1);
 
 //Initialzes subsystems in RobotContainer
 public static DriveBase driveBase;
@@ -90,20 +98,38 @@ public static Joystick logiTech;
 
 public static JoystickButton boxButton;
 public static JoystickButton coneButton;
-public static JoystickButton  clawExtendButton;
+public static JoystickButton clawExtendButton;
+
+public static JoystickButton lowArmUpButton;
+public static JoystickButton lowArmDowButton;
+public static JoystickButton highArmUpButton;
+public static JoystickButton highArmDownButton;
+
+public static Timer moveTimer;
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    moveTimer = new Timer();
+    moveTimer.start();
 
 //Initializes Joystick
     leftJoystick = new Joystick(0);
     rightJoystick = new Joystick(1);
     logiTech = new Joystick(2);
     
+    
  //   boxButton = new JoystickButton(logiTech, 1);
     coneButton = new JoystickButton(logiTech, 2);
     clawExtendButton = new JoystickButton(logiTech, 3);
-
+    /* 
+    lowArmUpButton = new JoystickButton(logiTech, 4);
+    lowArmDowButton = new JoystickButton(logiTech, 1);
+    
+    highArmUpButton = new JoystickButton(logiTech, 6);
+    highArmDownButton = new JoystickButton(logiTech, 7);
+    */
     driveBase = new DriveBase();
     clawBase = new ClawBase();
     armBase = new ArmBase();
@@ -111,13 +137,18 @@ public static JoystickButton  clawExtendButton;
 
 
     driveWithJoystick = new DriveWithJoystick();
-    CommandScheduler.getInstance().setDefaultCommand(driveBase, driveWithJoystick);
-    CommandScheduler.getInstance().setDefaultCommand(armBase, simpleArmRotationalControl);
+    simpleArmRotationalControl = new SimpleArmRotationalControl();
 
-    boxButton.onTrue(new BoxOpenClose());
+
+    //boxButton.onTrue(new BoxOpenClose());
     coneButton.onTrue(new ConeOpenClose());
     clawExtendButton.onTrue(new ClawInOut());
 
+    /*lowArmUpButton.whileTrue(new LowArmUp());
+    lowArmDowButton.whileTrue(new LowArmDown());
+    highArmUpButton.whileTrue(new HighArmUp());
+    highArmDownButton.whileTrue(new HighArmDown());
+    */
     // Configure the trigger bindings
     configureBindings();
   }

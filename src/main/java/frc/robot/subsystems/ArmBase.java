@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
@@ -221,10 +222,38 @@ public class ArmBase extends SubsystemBase {
   }
   
 
-  public void SimpleArmRotationalControl(double low, double high)
+  public void SimpleArmRotationalControl(Joystick logi)
   {
-    LowArmJoint.set(low * .06);
-    HighArmJoint.set(high * .06);
-  }
+    double lowJoint = logi.getRawAxis(1);//get values from joystick
+    double highJoint = logi.getRawAxis(5);
 
+    LowArmJoint.set(lowJoint * .2);
+    HighArmJoint.set(highJoint * -.2);
+  
+
+  }
+  public void LowArmUp()
+  {
+    LowArmJoint.set(.01);
+  }
+  public void LowArmDown()
+  {
+    LowArmJoint.set(-.01);
+  }
+  public void LowArmStop()
+  {
+    LowArmJoint.set(0);
+  }
+  public void HighArmUp()
+  {
+    HighArmJoint.set(.01);
+  }
+  public void HighArmDown()
+  {
+    HighArmJoint.set(-.01);
+  }
+  public void HighArmStop()
+  {
+    HighArmJoint.set(0);
+  }
 }

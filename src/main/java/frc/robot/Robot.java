@@ -69,10 +69,13 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
 
     //auto for taxi
-     m_autonomousCommand = new TimedMove(3);
+     m_autonomousCommand = new TimedMove(2.5);
+
+    //auto for taxi backwards
+   // m_autonomousCommand = new TimedMove(-2.5);
 
     //auto for charge station
-  //  m_autonomousCommand = new TimedMove(1.9);
+   // m_autonomousCommand = new TimedMove(1.95);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

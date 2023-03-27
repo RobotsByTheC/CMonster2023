@@ -50,10 +50,10 @@ public class DriveBase extends SubsystemBase {
     if (input < 0)
     //go BACKWARDS
     {
-       leftTalon.set(.23);
-       rightTalon.set(-.23);
-       leftVictor.set(.23);
-       rightVictor.set(-.3);
+       leftTalon.set(-.5);
+       rightTalon.set(.5);
+       leftVictor.set(-.5);
+       rightVictor.set(.5);
     }
     else
     //go FORWARDS

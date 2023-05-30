@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Compressor;
 //Pneumatic imports
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 //imports joysticks and buttons
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -72,6 +73,10 @@ public static LimelightBase limelightBase;
  //Arm motors and subsystem
  public static CANSparkMax lowArmJoint = new CANSparkMax(6 , MotorType.kBrushless);
  public static CANSparkMax highArmJoint = new CANSparkMax(7, MotorType.kBrushless);
+
+ //encoders, values are placeholders
+ public static Encoder lowArmEncoder = new Encoder(0, 1);
+ public static Encoder highArmEncoder = new Encoder (4, 5);
 
  //compressor and solenoids
  //Compressors

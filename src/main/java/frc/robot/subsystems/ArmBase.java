@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -76,6 +78,12 @@ public class ArmBase extends SubsystemBase {
   public static CANSparkMax LowArmJoint = RobotContainer.lowArmJoint;
   public static CANSparkMax HighArmJoint = RobotContainer.highArmJoint;
   //Encoders for both LowJoint and HighJoint
+  private Encoder lowArmEncoder = RobotContainer.lowArmEncoder;
+  private Encoder highArmEncoder = RobotContainer.highArmEncoder;
+
+  //Encoder controllers
+  private PIDController lowArmController = new PIDController(0, 0, 0);
+  private PIDController highArmController = new PIDController(0, 0, 0);
 
 
   //TARGET and CURRENT angles (in radians) for the upper and lower arm joint
